@@ -36,11 +36,6 @@ export default {
     },
     methods: {
         choose_ani () {
-            if (!this.status) {
-                this.$store.dispatch('showBottom');
-            } else {
-                this.$store.dispatch('hideBottom');
-            }
             this.status = !this.status;
             this.$emit('choose_ani', this.name);//将数据回调给父组件
         },
