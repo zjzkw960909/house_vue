@@ -1,0 +1,4 @@
+export const GET_LOCATION = 'GET_LOCATION'
+export const GET_SELL_PRICE = 'GET_SELL_PRICE'
+export const GET_RENT_PRICE = 'GET_RENT_PRICE'
+export const GET_APARTMENT = 'GET_APARTMENT'

@@ -1,0 +1,26 @@
+body{
+    font-family: "Microsoft YaHei" ! important;
+    background-color:#ebebeb;
+}
+.fl{
+    float:left;
+}
+.fr{
+    float:right;
+}
+.clear{
+    clear:both;
+}
+.dis-block{
+    display:block;
+}
+.dis-none{
+    display:none;
+}
+.margin-auto{
+    margin-left:auto;
+    margin-right:auto;
+}
+
+
+
