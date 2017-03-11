@@ -61,7 +61,6 @@ export default {
     overflow:hidden;
     padding:8px;
     float:left;
-    width:100%;
 }
 .out .left{
     display:inline-block;
