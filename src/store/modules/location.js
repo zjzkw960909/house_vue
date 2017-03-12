@@ -14,7 +14,7 @@ const getters = {
     rentPrice: state => state.rentPrice,
     dealLocation: state => {
         let location = _.clone(state.location);
-        location.unshift({location: '所有区域'});
+        location.unshift({location: '区域'});
         let temp = {
             data: location,
             name: 'location',
@@ -54,7 +54,10 @@ const actions = {
 
 const mutations = {
     [types.GET_LOCATION] (state, res) {
-        state.location = res;
+        state.location = _.map(res, (v) => {
+            v.href = '#/sell/' + v.location +'/0/0';
+            return v;
+        });
     },
     [types.GET_SELL_PRICE] (state, res) {
         state.sellPrice = res;

@@ -3,7 +3,7 @@
         .left
             i.fa(:class="icon")
         .mid
-            a(v-for="(v, k) in item") {{ v[name] }}
+            a(v-for="(v, k) in test", :href="v.href") {{ v[name] }} 
         .right(@click="showSellWhere")
             i.fa.fa-angle-up(v-show="status")
             transition(name="fade")
@@ -11,12 +11,32 @@
 </template>
 <script>
 import { mapGetters } from 'vuex'
+import _ from 'underscore'
 export default {
     name: 'indexList',
     props: ['item', 'name', 'icon'],
     data () {
         return {
             status: 1
+        }
+    },
+    computed: {
+        test () {
+            if (this.item.length) {
+                let name = this.name;
+                return _.map(this.item, (v) => {
+                    if (name === 'location') {
+                        v['href'] = '#/sell/' + v[name] + '/0/0';
+                    }
+                    if (name === 'apartment') {
+                        v['href'] = '#/sell/0/' + v[name] + '/0';
+                    }
+                    if (name === 'price') {
+                        v['href'] = '#/sell/0/0/' + v[name];
+                    }
+                    return v;
+                });
+            }
         }
     },
     methods: {
@@ -57,6 +77,7 @@ export default {
     color:#75C751;
 }
 .out {
+    width:100%;
     height:36px;
     overflow:hidden;
     padding:8px;
@@ -74,7 +95,7 @@ export default {
 }
 .out .right{
     display:inline-block;
-    float:left;
+    float:right;
     width:10%   
 }
 </style>

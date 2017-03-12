@@ -8,7 +8,6 @@ var http = require('http');
 var session = require('express-session');
 var redis_store = require('connect-redis')(session);
 var formidable = require('express-formidable');
-
 var app = express();
 //使用定时工具
 var set_schedule = require('./utils/node-schedule');

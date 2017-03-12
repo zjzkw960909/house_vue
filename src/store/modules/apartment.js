@@ -10,7 +10,7 @@ const getters = {
     allApartment: state => state.apartment,
     dealApartment: state => {
         let apartment = state.apartment;
-        apartment.unshift({apartment: '所有户型'});
+        apartment.unshift({apartment: '户型'});
         let temp = {
             data: apartment,
             name: 'apartment',
