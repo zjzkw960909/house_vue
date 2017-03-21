@@ -2,7 +2,7 @@
 div
     Top
     nav.navlist
-        a(href="#/sell-list") 
+        a(href="#/sell/0/0/0") 
             i.icon.icon1()
             |  售房查询
         a(href="#/rent-list") 
@@ -24,18 +24,41 @@ div
     section.detail(style="margin-top:10px;clear:left")
         .title
             span.margin-auto 二手房出售
-        index-list(:item="location", :name="sell[0].name", :icon="sell[0].icon")
-        index-list(:item="price", :name="sell[1].name", :icon="sell[1].icon")
-        index-list(:item="apartment", :name="sell[2].name", :icon="sell[2].icon")
+        index-list(v-for="(item, index) in sell", :key="index", :item="item.item", :icon="item.icon", :name="item.name", :type="item.type")
     section.detail(style="margin-top:10px;clear:left")
         .title 
             span.margin-auto 二手房出租
-        index-list(:item="location", :name="sell[0].name", :icon="sell[0].icon")
-        index-list(:item="price1", :name="sell[1].name", :icon="sell[1].icon")
-        index-list(:item="apartment", :name="sell[2].name", :icon="sell[2].icon")
 </template>
 
 <script>
+var solveData = (sell, name, items, icon) => {
+    let temp = {};
+    if (name === 'location') {
+        temp.name = 'location';
+        temp.item = items.map((v) => {
+            v.href = `#/sell/${v['location']}/0/0`;
+            return v;
+        });
+    }
+    if (name === 'apartment') {
+        temp.name = 'apartment';
+        temp.item = items.map((v) => {
+            v.href = `#/sell/0/${v['apartment']}/0`;
+            return v;
+        });
+    }
+    if (name === 'price') {
+        temp.name = 'price';
+        temp.item = items((v) => {
+            v.href = `#/sell/0/0/${v['price']}`;
+            return v;
+        });
+    }
+    temp.type = 'href';
+    temp.icon = icon;
+    sell.push(temp);
+
+}
 import Top from './common/Top.vue'
 import IndexList from './common/IndexList.vue'
 import { mapGetters, mapActions } from 'vuex'
@@ -44,24 +67,30 @@ export default {
     components: {Top, IndexList},
     data () {
         return {
-            sell: [
-                {name: "location", icon: "fa-map-marker"},
-                {name: "price", icon: "fa-jpy"},
-                {name: "apartment", icon: "fa-tint"},
-            ]
+            sell: [],
         }
     },
-    computed: mapGetters({
+    /*computed: mapGetters({
         location: 'allLocation',
         apartment: 'allApartment',
         price: 'sellPrice',
         price1: 'rentPrice',
-    }),
+    }),*/
     created () {
-        this.$store.dispatch('getLocation'),
+        let http = this.$http, tempSell = [];
+        http.get('/api/location').then((res) => {
+            solveData(tempSell, 'location', res.body.data, "fa-map-marker");
+            return http.get('/api/apartment');
+        }).then((res) => {
+            solveData(tempSell, 'apartment', res.body.data, "fa-jpy");
+            this.sell = tempSell;
+        }, (err) => {
+            console.log(err)
+        });
+        /*this.$store.dispatch('getLocation'),
         this.$store.dispatch('getApartment'),
         this.$store.dispatch('getSellPrice')
-        this.$store.dispatch('getRentPrice')
+        this.$store.dispatch('getRentPrice')*/
     },
     methods: {
         test() {

@@ -14,7 +14,7 @@ div
         li.common(style="padding:.4655em", v-for="(v, k) in sellList") 
             a(href)
                 .item-thumb
-                    img
+                    img(:src="JSON.parse(v.pic)[0]")
                 .content
                     p.title.over {{ v.location + v.address }}
                     .size.over {{ v.size }}平方米
@@ -135,6 +135,8 @@ export default {
     float:left;
     padding:0;
     width:100%;
+    position:relative;
+    z-index:1000
 }
 .choose-area li {
     background-color:#f8f8f8;
@@ -153,6 +155,8 @@ li {
     width: 100%;
     background-color: #fff;
     float:left;
+    position:absolute;
+    margin-top:50px;
 }
 .house-list a{
     width: 100%;

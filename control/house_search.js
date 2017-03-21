@@ -1,5 +1,4 @@
 var Search = require('../models/house_search');
-
 module.exports = function (app) {
     app.post('/add/location', function (req, res){
         var location = new Search({
@@ -46,14 +45,14 @@ module.exports = function (app) {
         });
     });
 /*********售房*************/
-    app.post('/find/sell', function (req, res) {
+    app.post('/api/findSell', function (req, res) {
         Search.find_sell(req.body.page, function (err ,data) {
             res.json({status: 0, data: data});
             res.end();
         });
     });
 
-    app.post('/find/sell/one', function (req, res) {
+    app.post('/api/findSellOne', function (req, res) {
         var sell_one = new Search({
             location: req.body.location,
             apartment: req.body.apartment,
@@ -62,7 +61,7 @@ module.exports = function (app) {
         });
         console.log(req.body);
         sell_one.find_sell_one(function (err, data) {
-            res.json({ status:0, data: data});
+            res.json({data: data});
             res.end();
         });
         

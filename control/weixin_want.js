@@ -1,7 +1,7 @@
 var Want = require('../models/weixin_want');
 
 module.exports = function (app) {
-    app.post('/wx/want', function (req, res) {
+    app.post('/api/want', function (req, res) {
         var want = new Want({
             apartment: req.body.apartment,
             address: req.body.address,

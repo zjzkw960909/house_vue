@@ -2,45 +2,31 @@
     .out
         .left
             i.fa(:class="icon")
-        .mid
-            a(v-for="(v, k) in test", :href="v.href") {{ v[name] }} 
+        .mid(v-if="type == 'href'")
+            a(v-for="(v, k) in item", :href="v.href") {{ v[name] }} 
+        .mid(v-if="type == 'span'", @click="chooseWhere")
+            span(v-show="!showAll") {{ first || item[0][name]}} 
+            span(v-show="showAll", v-for="(v, k) in item") {{ v[name] }} 
         .right(@click="showSellWhere")
             i.fa.fa-angle-up(v-show="status")
             transition(name="fade")
                 i.fa.fa-angle-down(v-show="!status")
 </template>
 <script>
-import { mapGetters } from 'vuex'
-import _ from 'underscore'
 export default {
     name: 'indexList',
-    props: ['item', 'name', 'icon'],
+    props: ['item', 'name', 'icon', 'type'],
     data () {
         return {
-            status: 1
+            status: 1,
+            showAll: 0,
+            first: '',
         }
     },
     computed: {
-        test () {
-            if (this.item.length) {
-                let name = this.name;
-                return _.map(this.item, (v) => {
-                    if (name === 'location') {
-                        v['href'] = '#/sell/' + v[name] + '/0/0';
-                    }
-                    if (name === 'apartment') {
-                        v['href'] = '#/sell/0/' + v[name] + '/0';
-                    }
-                    if (name === 'price') {
-                        v['href'] = '#/sell/0/0/' + v[name];
-                    }
-                    return v;
-                });
-            }
-        }
     },
     methods: {
-        showSellWhere (e) {
+        hideStatus (e) {
             let $out = e.target.parentElement.parentElement;
             if (!this.status) {
                 $out.style.height =  '';
@@ -48,7 +34,20 @@ export default {
                 $out.style.height =  '100%';
             }
             this.status = !this.status;
-        }
+        },
+        showSellWhere (e) {
+            if (this.type === 'span') {
+                this.showAll = !this.showAll;   
+            }
+            this.hideStatus(e);
+        },
+        chooseWhere (e) {
+            this.first = e.target.textContent.split(' ').join('');
+            this.showAll = !this.showAll;   
+            this.hideStatus(e);
+            let temp = {name: this.name, value: this.first};
+            this.$store.dispatch('changeWantPost', temp);
+        },
     }
     
 }
@@ -65,22 +64,26 @@ export default {
 .fade-enter, .fade-leave-active {
   opacity: 0
 }
-.out a{
+.out a,span{
     display:inline-block;
     font-size:17px;
     line-height:30px;
     color:#000;
     padding:3px 6px;
 }
+.out span {
+    float:right !important;
+    font-size: 14px !important;
+}
 .out i {
-    font-size:30px; 
+    font-size:26px; 
     color:#75C751;
 }
 .out {
     width:100%;
-    height:36px;
+    height:30px;
     overflow:hidden;
-    padding:8px;
+    padding:5px;
     float:left;
 }
 .out .left{

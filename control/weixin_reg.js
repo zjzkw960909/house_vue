@@ -1,7 +1,7 @@
 var House = require('../models/weixin_reg');
 
 module.exports = function (app, times) {
-    app.post('/wx/sell/reg', function (req, res) {
+    app.post('/api/sellReg', function (req, res) {
         var house = new House({
             location: req.body.location,
             apartment: req.body.apartment,

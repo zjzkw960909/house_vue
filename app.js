@@ -9,6 +9,7 @@ var session = require('express-session');
 var redis_store = require('connect-redis')(session);
 var formidable = require('express-formidable');
 var app = express();
+//var cors = require('cors');
 //使用定时工具
 var set_schedule = require('./utils/node-schedule');
 
@@ -24,6 +25,7 @@ var ip = 3300;
 var globel = {
     times: 1392
 };
+//app.use(cors());
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev')); //记录器，显示req的信息,dev默认

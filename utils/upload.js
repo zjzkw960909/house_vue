@@ -5,7 +5,17 @@ module.exports = function (app, path, uploadDir) {
         var files_path = [];
         var files = req.body.file;
         var fName = (new Date()).getTime();
-
+        fs.exists(uploadDir, function (exists) {
+            if (!exists) {
+                fs.mkdir(uploadDir, (err) => {
+                    if (err) {
+                        console.log(err)
+                    } else {
+                        console.log('succ');
+                    }
+                });
+            }
+        });
         if( files.length == undefined ){
             fs.rename(files.path, uploadDir+fName, function (err) {
                 if( err ){

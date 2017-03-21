@@ -151,9 +151,10 @@ Search.prototype.find_sell_one = function ( callback ){
                 string = "price > '150'";
                 break;
         }
-        sql = sql+and+string+" order by sell_id desc"+page;
+        sql = sql+and+string;
         count++;
     }
+    sql += " order by sell_id desc"+page;
     console.log(sql);
     pool.acquire(function(err, client) {
         client.query(sql, function (err, result,data) {
