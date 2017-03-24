@@ -91,15 +91,6 @@ export default {
         postData: 'getWantPost',
     }),
     methods: {
-        out1 (e) {
-            console.log(1)
-        },
-        out2 (e) {
-            console.log(2)
-        },
-        out3 (e) {
-            console.log(3)
-        },
         changeShow (data) {
             this.show = data;
         },
@@ -127,6 +118,8 @@ export default {
             
             });
         }
+    },
+    mounted() {
     },
     created () {
         let http = this.$http, tempSell = [];

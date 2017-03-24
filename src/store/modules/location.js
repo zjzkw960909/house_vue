@@ -54,10 +54,7 @@ const actions = {
 
 const mutations = {
     [types.GET_LOCATION] (state, res) {
-        state.location = _.map(res, (v) => {
-            v.href = '#/sell/' + v.location +'/0/0';
-            return v;
-        });
+        state.location = res;
     },
     [types.GET_SELL_PRICE] (state, res) {
         state.sellPrice = res;
