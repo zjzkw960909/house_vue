@@ -7,7 +7,7 @@ div
         .weui_dialog_bd {{ item.content }}
         .weui_dialog_ft
             .weui_btn_dialog.default(style="width:50%;float:left") 取消
-            .weui_btn_dialog.primary(@click="sure", dstyle="width:50%;float:right") 确定
+            .weui_btn_dialog.primary(@click="sure", style="width:50%;float:right") 确定
 </template>
 
 <script>
